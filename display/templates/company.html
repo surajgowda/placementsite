@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>Placement</title>
+    </head>
+    <body>
+        <h1>{{company}}</h1>
+     
+       
+        {% for update in updates %}
+        <p>-------------------------------------------</p>  
+        <p>{{update.title}}</p>
+        <p>{{update.date}}</p>
+        <p>{{update.description}}</p>
+        <p>-------------------------------------------</p>
+        
+        {% endfor %}
+
+    </body>
+    </html>
