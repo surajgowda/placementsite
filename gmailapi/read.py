@@ -168,9 +168,9 @@ def get_emails():
 
     conn = pymysql.connect(
     host="localhost",
-    user="root",
+    user="placement",
     password="Suraj@2001",
-    database="suraj"
+    database="placement"
     )
 
 # Create a cursor object to execute SQL commands
