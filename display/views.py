@@ -1,11 +1,14 @@
 from django.shortcuts import render
 from .models import CustomUser, Company, Updates
+import pytz
+from datetime import datetime
 
 # Create your views here.
 def home(request):
     cand = CustomUser.objects.get(username=request.user)
     upd = Updates.objects.filter(company__in=cand.companies_applied.all())
-    date = Updates.objects.filter(date__date__gte=timezone.now().date())
+    current_date_in_kolkata = pytz.timezone('Asia/Kolkata').localize(datetime.now()).date()
+    date = Updates.objects.filter(date__date__gte=current_date_in_kolkata)
     return render(request, 'MyAccount.html', {'updates':upd})
 
 
