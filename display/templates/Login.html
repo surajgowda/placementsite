@@ -52,10 +52,12 @@
               <h1 class="text-white m-0">Login</h1>
             </div>
             <div class="card-body rounded-bottom  p-5" style="background-color:indigo;">
-              <form>
+              <form method="post">
+                {% csrf_token %}
                 <div class="form-group">
                   <input
                     type="text"
+                    name = "username"
                     class="form-control border-0 p-4"
                     placeholder="UserName"
                     required="required"
@@ -64,12 +66,13 @@
                 <div class="form-group">
                   <input 
                   type="password" 
+                  name = "password"
                   class = "form-control border-0 p-4"
                   placeholder="Password"
                   required = "required">
                 </div>  
                 <div>
-                  <a href="{% url 'MyAccount' %}" 
+                  <input type="submit" 
                     class="btn btn-secondary btn-block border-0 py-3" 
                     style="font-size: larger;">
                     Login
