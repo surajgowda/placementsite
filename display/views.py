@@ -25,6 +25,20 @@ def login_view(request):
 
     return render(request, 'Login.html')
     
+    
+def registration(request):
+    if request.method=='POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        email = request.POST['email']
+        user = CustomUser.objects.create_user(username=username,password=password,email=email)
+        user.save()
+        login(request, user)
+        return redirect('MyAccount')
+    else:
+        return render(request, 'register.html')
+    
+    
 def home(request):
     if request.user.is_authenticated:
         user = CustomUser.objects.get(username=request.user)
