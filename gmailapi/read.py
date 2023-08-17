@@ -1,90 +1,3 @@
-# # import the required libraries
-# from googleapiclient.discovery import build
-# from google_auth_oauthlib.flow import InstalledAppFlow
-# from google.auth.transport.requests import Request
-# import pickle
-# import os.path
-# import base64
-# from bs4 import BeautifulSoup
-
-# # Define the SCOPES. If modifying it, delete the token.pickle file.
-# SCOPES = ['https://www.googleapis.com/auth/gmail.readonly', 'https://www.googleapis.com/auth/gmail.modify']
-
-# def authenticate():
-#     """Authenticates the user using OAuth 2.0 and returns the Gmail API service."""
-#     creds = None
-
-#     # The file token.pickle contains the user access token.
-#     # Check if it exists
-#     if os.path.exists('token.pickle'):
-#         with open('token.pickle', 'rb') as token:
-#             creds = pickle.load(token)
-
-#     # If credentials are not available or are invalid, ask the user to log in.
-#     if not creds or not creds.valid:
-#         if creds and creds.expired and creds.refresh_token:
-#             creds.refresh(Request())
-#         else:
-#             flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
-#             creds = flow.run_local_server(port=0)
-
-#         # Save the access token in token.pickle file for the next run
-#         with open('token.pickle', 'wb') as token:
-#             pickle.dump(creds, token)
-
-#     # Connect to the Gmail API
-#     service = build('gmail', 'v1', credentials=creds)
-#     return service
-
-# def get_emails():
-#     """Fetches and prints a list of emails from the user's Gmail account."""
-#     try:
-#         service = authenticate()
-#         # Request a list of all the unread messages
-#         result = service.users().messages().list(userId='me', q='is:unread').execute()
-#         messages = result.get('messages', [])
-
-#         # Iterate through all the unread messages
-#         for msg in messages:
-#             # Get the message from its id
-#             txt = service.users().messages().get(userId='me', id=msg['id']).execute()
-
-#             # Get the subject and sender email from the headers
-#             subject = ''
-#             sender = ''
-#             for header in txt['payload']['headers']:
-#                 if header['name'] == 'Subject':
-#                     subject = header['value']
-#                 elif header['name'] == 'From':
-#                     sender = header['value']
-
-#             # Get the message body if 'data' exists in the payload, else use an empty string
-#             body = ''
-#             try:
-#                 parts = txt['payload']['parts'][0]
-#                 data = parts['body']['data']
-#                 data = data.replace("-", "+").replace("_", "/")
-#                 decoded_data = base64.b64decode(data).decode('utf-8')
-#                 soup = BeautifulSoup(decoded_data, 'html.parser')
-#                 body = soup.get_text()
-#             except (KeyError, TypeError):
-#                 pass
-
-#             # Printing the subject, sender's email, and message
-#             print("Subject:", subject)
-#             print("From:", sender)
-#             print("Message:", body)
-#             print('\n')
-
-#             # Mark the message as read
-#             service.users().messages().modify(userId='me', id=msg['id'], body={'removeLabelIds': ['UNREAD']}).execute()
-
-#     except Exception as e:
-#         print("An error occurred:", str(e))
-
-# if __name__ == "__main__":
-#     get_emails()
-# --------------------------------------------------------------------------------------
 
 import os.path
 import pickle
@@ -95,6 +8,7 @@ from bs4 import BeautifulSoup
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
+import datetime
 
 # Define the SCOPES. If modifying it, delete the token.pickle file.
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly', 'https://www.googleapis.com/auth/gmail.modify']
@@ -166,15 +80,6 @@ def get_message_body(message):
 def get_emails():
     
 
-    conn = pymysql.connect(
-    host="localhost",
-    user="placement",
-    password="Suraj@2001",
-    database="placement"
-    )
-
-# Create a cursor object to execute SQL commands
-    cursor = conn.cursor()
     """Fetches and prints a list of emails from the user's Gmail account."""
     try:
         service = authenticate()
@@ -184,6 +89,16 @@ def get_emails():
 
         # Iterate through all the unread messages
         for msg in messages:
+            
+            conn = pymysql.connect(
+            host="localhost",
+            user="placement",
+            password="Suraj@2001",
+            database="placement"
+            )
+
+# Create a cursor object to execute SQL commands
+            cursor = conn.cursor()
             # Get the message from its id
             txt = service.users().messages().get(userId='me', id=msg['id']).execute()
 
@@ -200,15 +115,18 @@ def get_emails():
             body = get_message_body(txt)
 
             # Printing the subject, sender's email, and message
+            date = datetime.datetime.now()
             
-            
+            message = body
+            if message == '' or message == ' ':
+                message = 'Please refer your email'
 # Sample data to insert into the table
             sample_data = [
-            (subject, sender),
+            (subject, str(message), date),
             ]
 
 # Insert data into the table
-            insert_sql = 'INSERT INTO droop (title, fro) VALUES (%s, %s)'
+            insert_sql = 'INSERT INTO display_notifications (title, description, date) VALUES (%s, %s, %s)'
             cursor.executemany(insert_sql, sample_data)
 
 # Commit the changes and close the connection
@@ -216,10 +134,10 @@ def get_emails():
             conn.close()
             
             
-            print("Subject:", subject)
-            print("From:", sender)
-            print("Message:", body)
-            print('\n')
+            # print("Subject:", subject)
+            # print("From:", sender)
+            # print("Message:", body)
+            # print('\n')
 
             # Mark the message as read
             service.users().messages().modify(userId='me', id=msg['id'], body={'removeLabelIds': ['UNREAD']}).execute()
