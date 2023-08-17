@@ -29,10 +29,10 @@
             </tr>
           </thead>
           <tbody>
-            {% for appl in applied %}
+            {% for compdata in companies_applied_with_dates %}
             <tr>
-              <td>{{appl.company}}</td>
-              <td>{{appl.date}}</td>
+              <td>{{compdata.name}}</td>
+              <td>{{compdata.date}}</td>
             </tr>
             {% endfor %}
           </tbody>

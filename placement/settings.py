@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-k_98v-af9rr9xb@9$xdze8+5xm^7358&56$5&^m@!5%$n61--i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['139.59.88.253','placement.s24.codes']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -79,8 +79,8 @@ MEDIA_URL = '/media/'
 DATABASES = {
     'default': {
     'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'placement',
-    'USER': 'placement',
+    'NAME': 'suraj',
+    'USER': 'root',
     'PASSWORD': 'Suraj@2001',
     'HOST': 'localhost',
     'PORT': '3306',

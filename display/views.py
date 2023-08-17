@@ -48,7 +48,11 @@ def home(request):
             company__in=user.companies_applied.all(),
             date__gte=now
         ).order_by('-date')  # Order by date in descending order
-        return render(request, 'MyAccount.html', {'getready': updates,'applied':upd})
+        companies_applied_with_dates = Company.objects.filter(customuser__in=[user]) \
+    .values('name', 'date') \
+    .distinct()
+        print(companies_applied_with_dates)
+        return render(request, 'MyAccount.html', {'getready': updates, 'companies_applied_with_dates':companies_applied_with_dates})
     else:
         # Handle case where user is not authenticated
         return render(request, 'placement.html')
