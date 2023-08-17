@@ -16,7 +16,7 @@
         <tbody>
           {% for company in companies %}
           <tr>
-            <th scope="row">{{ company.id }}</th>
+            <th scope="row">{{ forloop.counter }}</th>
             <td> <a href="{% url 'company' company.id %}" style='color:blue;font-weight:bold;'>{{ company.name }}</a></td>
             <td>{{ company.date|date:"Y-m-d H:i:s" }}</td>  
           </tr>

@@ -24,16 +24,13 @@
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th>Title</th>
               <th>Company Name</th>
-              <th>Description</th>
-              <th>Date</th>
+	      <th>Applied date</th>
             </tr>
           </thead>
           <tbody>
             {% for appl in applied %}
             <tr>
-              <td>{{ appl.title }}</td>
               <td>{{appl.company}}</td>
               <td>{{appl.date}}</td>
             </tr>

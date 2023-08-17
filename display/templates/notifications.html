@@ -21,7 +21,7 @@
           
             {% for notifs in notif %}
             <tr>
-            <th scope="row">{{notifs.id}}</th>
+            <th scope="row">{{ forloop.counter }}</th>
             <td>{{ notifs.title }}</td>
             <td>{{ notifs.description }}</td>
           </tr>

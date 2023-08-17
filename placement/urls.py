@@ -26,9 +26,9 @@ urlpatterns = [
     path('',views.home, name='MyAccount'),
     path('about/',views.about, name='about'),
     path('login/',views.login_view, name='Login'),
-    path('register/',views.registration, name='register'),
     path('placement/',views.home, name='placement'),
     path('update/<int:user_id>/',views.update_companies_applied, name='updatecompanies'),
+    path('register',views.register,name='register'),
     path('notifications/',views.notifications, name='notifications'),
     path('logout/',views.logout_view, name='logout'),
     
