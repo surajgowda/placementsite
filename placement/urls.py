@@ -25,10 +25,12 @@ urlpatterns = [
     path('company/<int:pk>/', views.company, name='company'),
     path('',views.placement, name='placement'),
     path('about/',views.about, name='about'),
-    path('login/',views.login, name='Login'),
-    path('contact/',views.contact, name='contact'),
+    path('login/',views.login_view, name='Login'),
     path('register/',views.register, name='Register'),
     path('dashboard/',views.home, name='MyAccount'),
+    path('update/<int:user_id>/',views.update_companies_applied, name='updatecompanies'),
+    path('notifications/',views.notifications, name='notifications'),
+    path('logout/',views.logout_view, name='logout'),
     
 ]
 

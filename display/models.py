@@ -43,11 +43,16 @@ class CustomUser(AbstractUser):
     department = models.TextField(_("Department"), null=True, blank=True)
     companies_applied = models.ManyToManyField(Company)    
     
-
-
-    
-    
     # Add any other additional fields or methods as needed
 
     def __str__(self):
         return self.username    
+    
+    
+class Notifications(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField(default="Please check your email for more information")
+    date = models.DateTimeField(default=timezone.now)
+    
+    def __str__(self):
+        return self.title

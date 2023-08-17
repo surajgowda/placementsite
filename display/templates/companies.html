@@ -1,120 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>S24-Placement</title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <meta content="Free HTML Templates" name="keywords" />
-        <meta content="Free HTML Templates" name="description" />
-        {% load static %}
-    
-        <!-- Favicon -->
-        <!-- <link href="{% static 'img/favicon.ico' %}" rel="icon" /> -->
-    
-        <!-- Google Web Fonts -->
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Handlee&family=Nunito&display=swap"
-          rel="stylesheet"
-        />
-    
-        <!-- Font Awesome -->
-        <link
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-          rel="stylesheet"
-        />
-    
-        <!-- Flaticon Font -->
-        <link href="{% static 'lib/flaticon/font/flaticon.css' %}" rel="stylesheet" />
-    
-        <!-- Libraries Stylesheet -->
-        <link href="{% static 'slib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet" />
-        <link href="{% static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet" />
-    
-        <!-- Customized Bootstrap Stylesheet -->
-        <link href="{% static 'css/style.css' %}" rel="stylesheet" />
-      </head>
-<body>
-    <!-- Navbar Start -->
-    <div class="container-fluid bg-light position-relative shadow">
-        <nav
-          class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5"
-        >
-          <a
-            href=""
-            class="navbar-brand font-weight-bold text-secondary"
-            style="font-size: 50px"
-          >
-          <!--Insert the logo image here -->
-  
-          <img src="{% static 'artificial-intelligence.png' %}" style="height:3vw;" alt="">
-          <span class="text">S24</span>
-          </a>
-          <button
-            type="button"
-            class="navbar-toggler"
-            data-toggle="collapse"
-            data-target="#navbarCollapse"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div
-            class="collapse navbar-collapse justify-content-between"
-            id="navbarCollapse"
-          >
-            <div class="navbar-nav font-weight-bold mx-auto py-0">
-              <a href="{% url 'MyAccount' %}" class="nav-item nav-link active">Home</a>
-              <!-- <a href="about.html" class="nav-item nav-link">About</a> -->
-              <!-- <a href="class.html" class="nav-item nav-link">Register</a> -->
-              <!-- <a href="Login.html" class="nav-item nav-link">Login</a> -->
-              <a href="{% url 'companies' %}"  class="nav-item nav-link">Companies</a>
-              <div class="nav-item dropdown">
-                <a
-                  href="#"
-                  class="nav-link dropdown-toggle"
-                  data-toggle="dropdown"
-                  >Notifications</a
-                >
-                <div class="dropdown-menu rounded-0 m-0">
-                <!--here add two PAGES FOR DROP DOWN --> 
-            
-                </div>
-              </div>
-              <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
-            </div>
-            <a href="{% url 'Register' %}" class="btn btn-secondary px-4 text-light" >Log-out</a>
-          </div>
-        </nav>
-      </div>
-      <!-- Navbar End -->
-    
-       <!-- Table Start-->
-    <div>
+{% extends 'base.html' %}
 
-      <table class="table text-light table-bordered" style="background-color: indigo;">
-          <thead>
-            <tr>
-              <th scope="col">Sno.</th>
-              <th scope="col">Name of the Company</th>
-              <th scope="col">Registration Date&time</th>
-              <th scope="col">Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for company in companies %}
-            <tr>
-              <th scope="row">1</th>
-              <td>{{ company.name }}</td>
-              <td>{{ company.date|date:"Y-m-d H:i:s" }}</td>
-              <td>{{ company.description }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-  
-        </div>
-  
-        <!--Table end-->
+{% block content %}
+    <h3 class="display-4 text-indigo" style="padding: 10px;margin: 5px;">Companies Arrived</h3>
 
-</body>
-</html>
+    <!-- Table Start-->
+    <div class="col-md-10" style="margin: auto;">
+      <table class="table table-bordered" style="text-align: center;">
+        <thead>
+          <tr>
+            <th scope="col" style="background-color: indigo;color: white;">Sno.</th>
+            <th scope="col" style="background-color: indigo;color: white;">Name of the Company</th>
+            <th scope="col" style="background-color: indigo;color: white;">Registration: Date & Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for company in companies %}
+          <tr>
+            <th scope="row">{{ company.id }}</th>
+            <td> <a href="{% url 'company' company.id %}" style='color:blue;font-weight:bold;'>{{ company.name }}</a></td>
+            <td>{{ company.date|date:"Y-m-d H:i:s" }}</td>  
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  <!--Table end-->
+{% endblock %}

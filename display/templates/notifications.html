@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+   
+    <h3 class="display-4 text-indigo" style="padding: 10px;margin: 5px;">Notifications</h3>
+
+    <!-- Table Start-->
+    <div class="col-md-10" style="margin: auto;">
+      <table class="table table-bordered" style="text-align: center;">
+        <thead>
+          <tr>
+            <th scope="col" style="background-color: indigo;color: white;">Sno.</th>
+            <th scope="col" style="background-color: indigo;color: white;">Title</th>
+            <th scope="col" style="background-color: indigo;color: white;">Description</th>
+
+
+          </tr>
+        </thead>
+        <tbody>
+          
+            {% for notifs in notif %}
+            <tr>
+            <th scope="row">{{notifs.id}}</th>
+            <td>{{ notifs.title }}</td>
+            <td>{{ notifs.description }}</td>
+          </tr>
+            {% endfor %}
+          
+        </tbody>
+      </table>
+    </div>
+  <!--Table end-->
+ {% endblock %} 
