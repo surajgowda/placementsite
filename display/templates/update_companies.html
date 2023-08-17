@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    /* Apply some basic styling to the form */
+.my-form {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 35px;
+    margin:20px;
+    border-radius: 5px;
+}
+
+/* Style the label of checkboxes */
+.checkbox-group label {
+    font-size: 16px;
+    font-weight: 400;
+}
+/* Style the submit button */
+.my-form button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.my-form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Add additional styles as needed */
+</style>
+
+    <h1 style="padding-top:45px;">List of Companies you've applied for</h1>
+    
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
+    <form method="post" class="my-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update Companies Applied</button>
+    </form>
+
+{% endblock %}
