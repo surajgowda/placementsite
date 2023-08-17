@@ -6,6 +6,7 @@ from django.utils import timezone
 from .forms import CompanyApplicationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 def login_view(request):
@@ -22,14 +23,7 @@ def login_view(request):
             return render(request, 'Login.html', {'error': 'Invalid username or password'})
 
     return render(request, 'Login.html')
-
-def home(request):
-    cand = CustomUser.objects.get(username=request.user)
-    upd = Updates.objects.filter(company__in=cand.companies_applied.all())
-    return render(request, 'MyAccount.html', {'updates':upd})
-
-
-
+    
 def home(request):
     if request.user.is_authenticated:
         user = CustomUser.objects.get(username=request.user)
@@ -42,34 +36,28 @@ def home(request):
         return render(request, 'MyAccount.html', {'getready': updates,'applied':upd})
     else:
         # Handle case where user is not authenticated
-        return render(request, 'home.html')
+        return render(request, 'placement.html')
 
-
-
+@login_required
 def companies(request):
     companies = Company.objects.all()
     return render(request, 'companies.html', {'companies':companies})
 
+@login_required
 def company(request, pk):
     company = Company.objects.get(pk=pk)
     updates = Updates.objects.filter(company=company)
     return render(request, 'company.html', {'company':company, 'updates':updates})
 
-def placement(request):
-    return render(request, 'placement.html')
-
 def about(request):
     return render(request, 'about.html')
 
-
+@login_required
 def notifications(request):
     notif = Notifications.objects.all()
     return render(request, 'notifications.html', {'notif':notif})
 
-def register(request):
-    return render(request, 'Register.html')
-
-
+@login_required
 def update_companies_applied(request, user_id):
     user = CustomUser.objects.get(pk=user_id)
     
@@ -84,6 +72,7 @@ def update_companies_applied(request, user_id):
     
     return render(request, 'update_companies.html', {'form': form})
 
+@login_required
 def logout_view(request):
     logout(request)
     return redirect('Login')
