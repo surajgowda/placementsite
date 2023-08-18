@@ -19,8 +19,8 @@ def authenticate():
 
     # The file token.pickle contains the user access token.
     # Check if it exists
-    if os.path.exists('token.pickle'):
-        with open('token.pickle', 'rb') as token:
+    if os.path.exists('/home/placement/placementwebsite/gmailapi/token.pickle'):
+        with open('/home/placement/placementwebsite/gmailapi/token.pickle', 'rb') as token:
             creds = pickle.load(token)
 
     # If credentials are not available or are invalid, ask the user to log in.
@@ -28,11 +28,11 @@ def authenticate():
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file('/home/placement/placementwebsite/gmailapi/credentials.json', SCOPES)
             creds = flow.run_local_server(port=0)
 
         # Save the access token in token.pickle file for the next run
-        with open('token.pickle', 'wb') as token:
+        with open('/home/placement/placementwebsite/gmailapi/token.pickle', 'wb') as token:
             pickle.dump(creds, token)
 
     # Connect to the Gmail API
@@ -78,7 +78,7 @@ def get_message_body(message):
     return process_parts(parts)
 
 def get_emails():
-    
+    print("checl")
 
     """Fetches and prints a list of emails from the user's Gmail account."""
     try:
